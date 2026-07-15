@@ -2,7 +2,7 @@
 
 Official implementation of **"XLM-R for Robust Cross-Lingual and Multilingual Sentiment Analysis of Code-Mixed E-Commerce Product Reviews"**
 
-📄 **Paper**: INCOSST 2026 (Camera-Ready) — [Add DOI / IEEE Xplore link once published]
+📄 **Paper**: INCOSST 2026 (Camera-Ready)
 
 ---
 
