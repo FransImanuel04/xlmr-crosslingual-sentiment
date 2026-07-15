@@ -237,7 +237,7 @@ ProjectName/
 ## 🙏 Acknowledgments
 
 - Big Data Lab, Information Systems Study Program, Faculty of Engineering and Informatics, Universitas Multimedia Nusantara (UMN)
-- Supervisor: Dr. Dinar Ajeng Kristiyanti
+- Supervisor: Dr. Dinar Ajeng Kristiyanti, S.Kom., M.Kom.
 - The authors thank Universitas Multimedia Nusantara for its financial and institutional support, which made this research possible.
 
 ---
