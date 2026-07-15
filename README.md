@@ -1,101 +1,83 @@
-# Project Title
+# XLM-R for Robust Cross-Lingual and Multilingual Sentiment Analysis of Code-Mixed E-Commerce Product Reviews
 
-Write the project title clearly and concisely.
-Example: Official PyTorch implementation of **"<Paper / Research Title>"**.
+Official implementation of **"XLM-R for Robust Cross-Lingual and Multilingual Sentiment Analysis of Code-Mixed E-Commerce Product Reviews"**
 
-📄 **Paper**: [<your paper link, example:](https://www.researchgate.net/)
+📄 **Paper**: INCOSST 2026 (Camera-Ready) — [Add DOI / IEEE Xplore link once published]
 
 ---
 
 ## 📋 Overview
 
-**Section Description** This section provides a concise overview of the project. What to Include:
-- Brief background information.
-- Research or project objectives.
-- Main dataset or data sources.
-- Methods, frameworks, or algorithms used.
-- Expected results or contributions.
+The rapid expansion of global e-commerce platforms has led to a surge of user-generated reviews written in multiple languages and code-mixed forms (e.g., Bengali written in Latin script mixed with English). This linguistic heterogeneity makes it difficult for conventional monolingual models to generalize, leading to inconsistent sentiment classification.
+
+- **Background**: Multilingual and cross-lingual e-commerce reviews are increasingly common, but conventional monolingual sentiment models struggle to generalize across languages and code-mixed text.
+- **Objective**: To evaluate whether multilingual pre-trained transformer models better preserve sentiment polarity through translation and code-mixing compared to monolingual and general-purpose alternatives.
+- **Datasets**: MARC (Multilingual Amazon Reviews Corpus, 18,000 reviews across 6 languages) and BanglishRev (Bengali–English code-mixed e-commerce reviews, 128,543 products).
+- **Methods**: Fine-tuning and benchmarking of BERT-base, RoBERTa, mBERT, and XLM-R, plus few-shot prompting of GPT-3.5, following a KDD (Knowledge Discovery in Database) pipeline with machine-translation-based normalization to English.
+- **Key Result**: XLM-R consistently achieves the best performance across both datasets, reaching **0.97 train accuracy** and **0.95 test accuracy/F1-score** on MARC, with McNemar's test showing **no statistically significant difference** from mBERT (p = 0.3817).
 
 ### Key Features
 
-**Section Description** This section highlights the main functionalities, capabilities, or technical components of the project. The goal is to help readers quickly understand what the system can do and what makes it technically useful. What to include:
-- Main functionalities of the system.
-- Important technical features.
-- (optional if Big data) AI/ML capabilities.
-- (optional if any) Automation or integration features.
-- Performance-related features.
-
-For Example:
-- **Novel Task**: GFD requires recognizing both labeled and unlabeled known identities (IDs) while simultaneously discovering new, previously unseen IDs
-- **Dynamic Prefix Generation**: Instance-specific feature extractors using lightweight, layer-wise prefixes generated on-the-fly by a HyperNetwork
-- **State-of-the-art Performance**: Significantly outperforms existing GCD methods and ArcFace baseline on fine-grained face recognition tasks
-- **High Cardinality Support**: Handles hundreds or thousands of visually similar face IDs effectively
+- **Cross-Lingual & Code-Mixed Benchmark**: Evaluates 5 model families (BERT-base, RoBERTa, mBERT, XLM-R, GPT-3.5) on both a multilingual dataset (MARC) and a code-mixed dataset (BanglishRev).
+- **KDD-Based Pipeline**: Structured five-stage pipeline — data selection, preprocessing, transformation (translation), data mining (model training), and evaluation.
+- **Machine-Translation Normalization**: Uses GoogleTranslator (DeepTranslator library) to translate all multilingual/code-mixed text into English as a pivot language before classification.
+- **Statistical Significance Testing**: McNemar's test used to determine whether performance differences between top models (XLM-R vs. mBERT) are statistically meaningful.
+- **Error Analysis**: Qualitative analysis of translation-induced misclassifications on both datasets.
 
 ---
 
 ## 🎯 Key Contributions
 
-**Section Description** This section explains the main research, technical, or practical contributions of the project. This section focuses on:
-- Novelty,
-- Research contributions,
-- Methodological improvements,
-- Technical innovations,
-- Real-world impact.
-
-For example:
-1. **Generalized Face Discovery (GFD)**: A new task formulation that bridges face identification and clustering in open-world scenarios
-2. **Dynamic Prefix Mechanism**: HyperNetwork-based prefix generators that create instance-specific feature extractors without massive model capacity
-3. **Comprehensive Benchmarks**: Six GFD benchmark datasets (YTF-500/1000/2000, CASIA-500/1000/2000)
-4. **Strong Generalization**: Competitive performance on generic GCD benchmarks (CIFAR-100, ImageNet-100, CUB, etc.)
+1. **Comprehensive Benchmark**: Systematic comparison of conventional transformers (BERT-base, RoBERTa), multilingual pre-trained models (mBERT, XLM-R), and a large language model (GPT-3.5) for sentiment classification of code-mixed e-commerce reviews.
+2. **Cross-Dataset Validation**: Evaluation across two structurally different datasets — a balanced multilingual dataset (MARC, 6 languages) and a real-world code-mixed dataset (BanglishRev, Bengali/English/Banglish).
+3. **Statistical Rigor**: McNemar's test on 293 differing predictions between XLM-R and mBERT (p = 0.3817), showing both models achieve statistically comparable performance despite XLM-R's slightly higher metrics.
+4. **Multilingual Robustness Framing**: Demonstrates that multilingual pre-training — not model scale alone — is the key factor for preserving sentiment signal across translation and code-mixing, with fine-tuned transformers outperforming non-fine-tuned GPT-3.5 (0.73 MARC / 0.68 BanglishRev test accuracy).
+5. **State-of-the-Art Comparison**: Outperforms previously reported F1-scores for mBERT and XLM-R on multilingual (0.93 / 0.97 vs. 0.86 / 0.91 in prior work) and code-mixed (0.96 / 0.96 vs. 0.82 / 0.88 in prior work) settings.
 
 ---
 
 ## Project Architecture / Research Workflow
 
-**Section Description** This section explains the overall research pipeline or system workflow. What to include:
-- Research methodology flowcharts
-- Architecture diagram
-- System pipeline illustrations
+This study adopts the **KDD (Knowledge Discovery in Database) framework**, consisting of five stages: **Data Selection → Data Pre-processing → Data Transformation → Data Mining → Evaluation**.
 
-Can be include:
-- Input and output for each stage.
-- Tools, frameworks, or technologies used.
-- Data flow or system process
-
-For Example:
+1. **Data Selection**: MARC (multilingual) and BanglishRev (code-mixed) datasets.
+2. **Data Pre-processing**: Text normalization, lowercasing, URL/emoji removal, tokenization, sentence splitting, and FastText-based language identification.
+3. **Data Transformation**: Translation of all text to English (pivot language) using GoogleTranslator (DeepTranslator), followed by an 80:10:10 train/validation/test split.
+4. **Data Mining**: Fine-tuning of BERT-base, RoBERTa, mBERT, and XLM-R; few-shot prompting of GPT-3.5.
+5. **Evaluation**: Accuracy, precision, recall, F1-score, and execution time, plus McNemar's test for statistical significance between top models.
 
 <p align="center">
-  <img src="examplearchitecture.png" alt="Architecture of Your Project">
+  <img src="figures/figure1_flow_of_proposed_method.png" alt="Flow of the Proposed Method (KDD Pipeline)">
 </p>
 
 ---
 
 ## 🚀 Installation
 
-**Section Description** Provide instructions for setting up the project environment.
-
-For Example:
-
 ### Requirements
 
 - Python 3.8+
-- PyTorch 2.3.1+
-- CUDA 11.8+
-- APEX (for mixed precision training)
-- etc.
+- PyTorch 2.0+
+- Transformers (Hugging Face) 4.x+
+- deep-translator (GoogleTranslator module)
+- fasttext (for language identification)
+- CUDA 11.8+ (GPU training; experiments were run on NVIDIA T4 via Google Colab Pro, High-RAM)
+- scikit-learn, pandas, numpy
+- statsmodels (for McNemar's test)
+- openai (for GPT-3.5 few-shot inference)
 
 ### Setup
 
 1. Clone the repository:
 ```bash
-git clone <repository-url, for example: https://github.com/yourusername/yourprojectname.git>
-cd ProjectName
+git clone <repository-url>
+cd <project-name>
 ```
 
 2. Create a conda environment:
 ```bash
-conda create -n projectname python=3.8
-conda activate projectname
+conda create -n xlmr-sentiment python=3.8
+conda activate xlmr-sentiment
 ```
 
 3. Install dependencies:
@@ -107,176 +89,168 @@ pip install -r requirements.txt
 
 ## 📊 Dataset Preparation
 
-### Name of The Dataset
+### 1) MARC (Multilingual Amazon Reviews Corpus)
 
-**Section Description** Provide information about the dataset used in the project. The dataset must be primary (data obtained for example (not limited to) from surveys, interviews, observations, experiments, sensors, web scrapping/crawling, API collection), not secondary or downloaded from other repository. 
-What to include:
-- Dataset name.
-- Dataset source.
-- Dataset link.
-- Total number of samples.
-- Data structure.
-- File format.
-- Example samples.
+A multilingual text classification dataset obtained from the Hugging Face repository. In this study, **18,000 reviews** were sampled, evenly distributed across **six languages** — Japanese (ja), German (de), English (en), French (fr), Spanish (es), and Chinese (zh) — each contributing 16.7% of the total samples. Each record contains review text, review title, star rating, anonymized reviewer/product IDs, and a coarse-grained product category.
 
-For example:
-We provide six benchmark datasets for evaluating the Generalized Face Discovery task:
+- **Source**: (https://huggingface.co/datasets/mteb/amazon_reviews_multi)
+- **Total samples used**: 18,000 reviews
+- **Split**: 80% train / 10% validation / 10% test
 
-| Dataset | Known IDs | Unknown IDs | Train Samples | Test Samples |
-|---------|-----------|-------------|---------------|--------------|
-| YTF-500 | 250 | 250 | 48,089 | 11,779 |
-| YTF-1000 | 500 | 500 | 96,002 | 23,523 |
-| YTF-2000 | 1,000 | 1,000 | 190,248 | 46,615 |
-| CASIA-500 | 250 | 250 | 46,991 | 11,999 |
-| CASIA-1000 | 500 | 500 | 89,508 | 22,867 |
-| CASIA-2000 | 1,000 | 1,000 | 184,432 | 47,114 |
+### 2) BanglishRev Dataset
 
-Or you can just give the link of the dataset if you already upload on the repository like Kaggle or Mendeley Dataset.
+A large-scale e-commerce product review corpus for sentiment analysis in Bengali, English, Banglish (Bengali written in Latin script), and mixed Bengali–English text, obtained from the Hugging Face repository.
+
+- **Source**: (https://huggingface.co/datasets/BanglishRev/bangla-english-and-code-mixed-ecommerce-review-dataset)
+- **Total samples**: Review data curated from 128,543 products (out of >1,000,000 candidate products)
+- **Language distribution**: Banglish 37.77%, English 31.27%, Bangla 25.04%, Code-mixed 5.92%
+- **Split**: 80% train / 10% validation / 10% test
 
 ### Download
 
-**The dataset can be obtained at the link**
- 
-**Download links:**
-**Datasets**: [Dataset link on repository or Drive]
-
-Explain the structue of the dataset, for example:
-
 Once downloaded, organize the data as follows:
 ```
-YourProject/
-├── positive_review2000/
-│   ├── train/
-│   └── test/
-├── negative_review2000/
-│   ├── train/
-│   └── test/
-├── neutral_review1000/
-│   ├── train/
-│   └── test/
-
+ProjectName/
+├── data/
+│   ├── marc/
+│   │   ├── train/
+│   │   ├── validation/
+│   │   └── test/
+│   └── banglishrev/
+│       ├── train/
+│       ├── validation/
+│       └── test/
 ```
+
 ---
 
 ## 🏋️ Training
 
-**Section Description** For big data, explain how to train the model. What to include:
-- Training scripts.
-- Training parameters.
-- Hyperparameters.
-- Execution commands.
-- GPU/CPU requirements.
+### Pre-processing & Translation
+All non-English and code-mixed reviews are translated into English (pivot language) using the `GoogleTranslator` module from the `deep-translator` library prior to model training.
 
-Example Structure:
+### Fine-tuning
 ```bash
-python train.py --config configs/train.yaml
+python train.py --model xlm-roberta-base --dataset marc --epochs 5 --batch_size 32 --lr 2e-5
+python train.py --model bert-base-multilingual-cased --dataset marc --epochs 5 --batch_size 32 --lr 2e-5
+python train.py --model bert-base-uncased --dataset marc --epochs 3 --batch_size 32 --lr 2e-5
+python train.py --model roberta-base --dataset marc --epochs 3 --batch_size 32 --lr 2e-5
 ```
+
+### GPT-3.5 (Few-Shot Prompting, No Fine-Tuning)
+```bash
+python evaluate_gpt.py --model gpt-3.5-turbo --dataset marc --shots 3 --temperature 0.0 --max_tokens 10
+```
+
+### Hyperparameter Settings
+
+| Model | Batch Size | Epochs | Learning Rate |
+|-------|-----------|--------|----------------|
+| XLM-R, mBERT | 32 | 5 | 2 × 10⁻⁵ |
+| RoBERTa, BERT-base | 32 | 3 | 2 × 10⁻⁵ |
+
+| GPT-3.5 Parameter | Value |
+|---|---|
+| Number of shots | 3 |
+| Temperature | 0.0 |
+| Max tokens | 10 |
+
+**Hardware**: All experiments were conducted on Google Colab Pro with an NVIDIA T4 GPU (High-RAM configuration).
 
 ---
 
 ## 📊 Results
 
-**Section Description** This section presents the final outcomes, outputs, or achievements of the project. The content of this section may vary depending on the project type.  The goal is to demonstrate what has been successfully developed, implemented, evaluated, or achieved.
-What to include:
-- Final project outcomes.
-- System implementation results.
-- Experimental or testing results.
-- Visualization results like evaluation graphs, screenshots of the system or dashboard.
-- Performance analysis.
-- User testing or usability results.
-- Comparison with baseline or previous systems or benchmark comparison.
-- Deployment results.
+### Model Performance on MARC and BanglishRev
 
-You can use table or visualization. 
+| Algorithm | Split | MARC Accuracy | MARC Precision | MARC Recall | MARC F1 | BanglishRev Accuracy | BanglishRev Precision | BanglishRev Recall | BanglishRev F1 |
+|---|---|---|---|---|---|---|---|---|---|
+| BERT-base | Train | 0.80 | 0.95 | 0.80 | 0.86 | 0.89 | 0.88 | 0.87 | 0.87 |
+| BERT-base | Test | 0.77 | 0.95 | 0.78 | 0.86 | 0.85 | 0.83 | 0.84 | 0.83 |
+| BERT-base | Validation | 0.80 | 0.95 | 0.80 | 0.87 | 0.86 | 0.84 | 0.85 | 0.84 |
+| RoBERTa | Train | 0.73 | 0.73 | 0.73 | 0.73 | 0.87 | 0.86 | 0.85 | 0.85 |
+| RoBERTa | Test | 0.72 | 0.72 | 0.72 | 0.72 | 0.83 | 0.81 | 0.82 | 0.81 |
+| RoBERTa | Validation | 0.68 | 0.66 | 0.67 | 0.66 | 0.84 | 0.82 | 0.83 | 0.82 |
+| mBERT | Train | 0.93 | 0.93 | 0.93 | 0.93 | 0.97 | 0.93 | 0.96 | 0.94 |
+| mBERT | Test | 0.87 | 0.88 | 0.88 | 0.87 | 0.94 | 0.88 | 0.93 | 0.89 |
+| mBERT | Validation | 0.90 | 0.90 | 0.89 | 0.89 | 0.94 | 0.87 | 0.93 | 0.89 |
+| **XLM-R** | **Train** | **0.97** | **0.97** | **0.97** | **0.97** | **0.97** | **0.94** | **0.96** | **0.95** |
+| **XLM-R** | **Test** | **0.95** | **0.95** | **0.95** | **0.95** | **0.95** | **0.90** | **0.93** | **0.88** |
+| **XLM-R** | **Validation** | **0.95** | **0.95** | **0.95** | **0.95** | **0.96** | **0.92** | **0.95** | **0.93** |
+| GPT-3.5 | Train | 0.75 | 0.76 | 0.74 | 0.75 | 0.72 | 0.74 | 0.70 | 0.71 |
+| GPT-3.5 | Test | 0.73 | 0.74 | 0.72 | 0.73 | 0.68 | 0.69 | 0.66 | 0.67 |
+| GPT-3.5 | Validation | 0.71 | 0.72 | 0.70 | 0.71 | 0.69 | 0.70 | 0.67 | 0.68 |
+
+**Execution time** (approx.): BERT-base ~565–590s, RoBERTa ~616–646s, mBERT ~610–671s, XLM-R ~811–1738s, GPT-3.5 ~781–820s.
+
+### Statistical Significance (McNemar's Test)
+XLM-R vs. mBERT prediction outputs showed **293 differing predictions**, with a **p-value of 0.3817 (> 0.05)** — indicating **no statistically significant difference** between the two models, despite XLM-R's slightly higher metrics.
+
+### Error Analysis
+XLM-R showed low misclassification rates: **328 errors (2.99%) on MARC** and **306 errors (2.49%) on BanglishRev**. Errors were largely attributed to translation inaccuracies that altered semantic meaning or sentiment expressions.
+
+### Comparison with Previous Studies (F1-Score)
+
+| Model | Dataset Type | This Study | Previous Studies |
+|---|---|---|---|
+| mBERT | Multilingual | 0.93 | 0.86 / 0.77 |
+| XLM-R | Multilingual | 0.97 | 0.91 / 0.80 |
+| GPT-3.5 | Multilingual | 0.74 | 0.87 |
+| mBERT | Code-Mixed | 0.96 | 0.82 |
+| XLM-R | Code-Mixed | 0.96 | 0.88 |
+| GPT-3.5 | Code-Mixed | 0.70 | 0.86 |
+
+Both mBERT and XLM-R outperformed previously reported results in multilingual and code-mixed settings, while GPT-3.5 (used without fine-tuning) underperformed relative to prior fine-tuned/few-shot baselines.
 
 ---
 
 ## 🏗️ Project Structure
 
-**Section Description** Explain you project structure.
-
-For Example: 
-
 ```
-FaceGCD/
-├── data_loader/              # Dataset loaders and augmentations
-│   ├── augmentations/        # Data augmentation strategies
-│   ├── youtube_faces_*.py    # YTF dataset loaders
-│   ├── casia_webface_*.py    # CASIA dataset loaders
-│   └── data_loaders.py       # Main data loading utilities
-├── model/                    # Model architectures
-│   ├── dino_vision_transformer.py  # DINO ViT backbone
-│   ├── prefix_generator.py   # HyperNetwork-based prefix generator
-│   ├── ViT_face.py           # Face-specific ViT components
-│   └── mobilenet.py          # Landmark CNN
-├── trainer/                  # Training utilities
-│   ├── trainer.py            # Main training loop
-│   └── faster_mix_k_means_pytorch.py  # Semi-supervised K-Means
-├── utils/                    # Utility functions
-│   ├── cluster_utils.py      # Clustering utilities
-│   ├── losses.py             # Loss functions
-│   └── dino_utils.py         # DINO-specific utilities
-├── shell/                    # Shell scripts for experiments
-├── train.py                  # Training script
-├── extract_features.py       # Feature extraction script
-├── SSK.py                    # Semi-supervised K-Means evaluation
-└── requirements.txt          # Python dependencies
-```
-
----
-
-## 📝 Citation
-
-**Section Description** Use this section if the project is associated with a publication or research paper. What to include:
-- Citation format.
-- DOI.
-- BibTeX entry.
-
-For Example:
-If you find this work useful for your research, please cite:
-
-```bibtex
-@article{oh2025facegcd,
-  title={...},
-  authors={...},
-  journal={...},
-  year={...}
-}
+ProjectName/
+├── data/                       # MARC and BanglishRev datasets
+├── data_loader/                 # Dataset loaders and preprocessing
+│   ├── marc_loader.py
+│   └── banglishrev_loader.py
+├── preprocessing/                # Text normalization, translation, language ID
+│   ├── clean_text.py
+│   ├── translate_to_english.py   # GoogleTranslator (deep-translator) pipeline
+│   └── language_id.py            # FastText-based language identification
+├── model/                        # Fine-tuning configs per model
+│   ├── xlmr_model.py
+│   ├── mbert_model.py
+│   ├── bert_model.py
+│   └── roberta_model.py
+├── llm/                           # GPT-3.5 few-shot prompting
+│   └── gpt35_prompting.py
+├── evaluation/                    # Evaluation utilities
+│   ├── metrics.py                 # Accuracy, precision, recall, F1
+│   ├── mcnemar_test.py            # McNemar's significance test
+│   └── error_analysis.py
+├── figures/                        # Paper figures (pipeline, confusion matrices, etc.)
+├── train.py                        # Training script (transformer models)
+├── evaluate_gpt.py                 # GPT-3.5 evaluation script
+└── requirements.txt                 # Python dependencies
 ```
 
 ---
 
 ## 🙏 Acknowledgments
 
-**Section Description** Provide acknowledgements to contributors or supporting organizations. What to include:
-- (Mandatory) Big Data Lab, Information Systems Study Program, Universitas Multimedia Nusantara (UMN).
-- (if any) Sponsors/Partners.
-- (if any) Research groups.
-- (if any) Dataset providers.
-- (if any) Collaborators.
+- Big Data Lab, Information Systems Study Program, Faculty of Engineering and Informatics, Universitas Multimedia Nusantara (UMN)
+- Supervisor: Dr. Dinar Ajeng Kristiyanti
+- The authors thank Universitas Multimedia Nusantara for its financial and institutional support, which made this research possible.
 
 ---
 
 ## 📧 Contact
 
-**Section Description** Provide maintainer or author contact information.
-
-For Example:
 For questions or issues, please:
 - Open an issue on GitHub
-- Contact: youremail@mail.com
+- Contact: frans.imanuel1@student.umn.ac.id
 
 ---
 
 ## 📜 License
 
-**Section Description** Please state your project license of any. For example:
-
 This project is released under the MIT License. See [LICENSE](LICENSE) file for details.
-
----
-
-## Tips
-
-You can just download this Read Me template and modify it. 
----
