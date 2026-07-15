@@ -40,15 +40,13 @@ The rapid expansion of global e-commerce platforms has led to a surge of user-ge
 
 This study adopts the **KDD (Knowledge Discovery in Database) framework**, consisting of five stages: **Data Selection → Data Pre-processing → Data Transformation → Data Mining → Evaluation**.
 
+<img width="1551" height="1014" alt="figure1_flow_of_proposed_method" src="https://github.com/user-attachments/assets/ce8f393a-a59c-42d0-ae3c-e26e173b45de" />
+
 1. **Data Selection**: MARC (multilingual) and BanglishRev (code-mixed) datasets.
 2. **Data Pre-processing**: Text normalization, lowercasing, URL/emoji removal, tokenization, sentence splitting, and FastText-based language identification.
 3. **Data Transformation**: Translation of all text to English (pivot language) using GoogleTranslator (DeepTranslator), followed by an 80:10:10 train/validation/test split.
 4. **Data Mining**: Fine-tuning of BERT-base, RoBERTa, mBERT, and XLM-R; few-shot prompting of GPT-3.5.
 5. **Evaluation**: Accuracy, precision, recall, F1-score, and execution time, plus McNemar's test for statistical significance between top models.
-
-<p align="center">
-  <img src="figures/figure1_flow_of_proposed_method.png" alt="Flow of the Proposed Method (KDD Pipeline)">
-</p>
 
 ---
 
