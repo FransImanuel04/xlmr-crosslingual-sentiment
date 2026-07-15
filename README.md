@@ -42,6 +42,7 @@ This study adopts the **KDD (Knowledge Discovery in Database) framework**, consi
 
 <img width="1551" height="1014" alt="figure1_flow_of_proposed_method" src="https://github.com/user-attachments/assets/ce8f393a-a59c-42d0-ae3c-e26e173b45de" />
 
+
 1. **Data Selection**: MARC (multilingual) and BanglishRev (code-mixed) datasets.
 2. **Data Pre-processing**: Text normalization, lowercasing, URL/emoji removal, tokenization, sentence splitting, and FastText-based language identification.
 3. **Data Transformation**: Translation of all text to English (pivot language) using GoogleTranslator (DeepTranslator), followed by an 80:10:10 train/validation/test split.
